@@ -7,7 +7,7 @@ import { ConnectDB } from "./Database/Db.js";
 import { mountRoutes } from "./Routes/Routes.js";
 import { mountHealthRoutes } from "./Routes/HealthRoutes.js";
 import { applySecurity } from "./security/securityMiddleware.js";
-import { createSocket, initSocketHandlers } from "./config/socketConfig.js";
+import { createSocket, initSocketHandlers } from "./Config/socketConfig.js";
 import notFound from "./Middlewares/notFound.js";
 import errorHandler from "./Middlewares/errorHandler.js";
 import { setupGracefulShutdown } from "./Config/shutdownConfig.js";
