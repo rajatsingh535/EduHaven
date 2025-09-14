@@ -4,7 +4,7 @@ import fetch, { Headers, Request, Response } from "node-fetch";
 import dotenv from "dotenv";
 import { applyCommonMiddleware } from "./Middlewares/commonMiddleware.js";
 import { ConnectDB } from "./Database/Db.js";
-import { mountRoutes } from "./Routes/routes.js";
+import { mountRoutes } from "./Routes/Routes.js";
 import { mountHealthRoutes } from "./Routes/HealthRoutes.js";
 import { applySecurity } from "./security/securityMiddleware.js";
 import { createSocket, initSocketHandlers } from "./config/socketConfig.js";
