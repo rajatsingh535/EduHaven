@@ -68,59 +68,47 @@
 ## 📂Folder Structure📂
 
 ```
-📂 repo-root/                  # Root directory of the repository
-├─ 📂 .github/                 # GitHub configuration for issues, PRs, workflows
-│  ├─ 📂 ISSUE_TEMPLATE/       # Templates for GitHub issues
-│  │  ├─ 📄 bug_report.md           # Template for reporting bugs
-│  │  ├─ 📄 config.yml              # Configuration for issue templates
-│  │  ├─ 📄 documentation_update.md # Template for documenting updates
-│  │  └─ 📄 feature_request.md      # Template for requesting new features
-│  ├─ 📂 workflows/            # CI/CD and automated workflows
-│  │  ├─ 📄 eslint.yml                # Runs ESLint checks
-│  │  ├─ 📄 issue-create-automate-message.yml # Automates issue creation messages
-│  │  ├─ 📄 pr-validation.yml        # Validates pull requests
-│  │  └─ 📄 prettier.yml              # Runs Prettier formatting
-│  └─ 📄 PULL_REQUEST_TEMPLATE.md # Template for pull requests
-├─ 📂 client/                  # Frontend code (likely a React/Vite project)
-│  ├─ 📂 public/               # Public static files (images, icons, etc.)
-│  ├─ 📂 src/                  # Source code of the frontend (components, pages, styles)
-│  ├─ 📄 .env.example           # Example environment variables
-│  ├─ 📄 .env.extension         # Extended environment variables
-│  ├─ 📄 .gitignore             # Files to be ignored by Git
-│  ├─ 📄 components.json        # Configuration/list of frontend components
-│  ├─ 📄 eslint.config.js       # ESLint configuration for frontend
-│  ├─ 📄 index.html             # Main HTML entry point
-│  ├─ 📄 jsconfig.json          # JavaScript/TypeScript configuration
-│  ├─ 📄 package-lock.json      # Lock file for npm dependencies
-│  ├─ 📄 package.json           # Frontend dependencies and scripts
-│  ├─ 📄 postcss.config.js      # PostCSS configuration
-│  ├─ 📄 tailwind.config.js     # Tailwind CSS configuration
-│  ├─ 📄 vercel.json            # Vercel deployment configuration
-│  └─ 📄 vite.config.js         # Vite build tool configuration
+📂 repo-root/
+├─ 📂 .github/                 # GitHub workflows, issue & PR templates
+├─ 📂 client/                  # Frontend code (React/Vite)
+│  ├─ 📂 src/                  # Components, pages, styles
+│  ├─ 📂 public/               # Static assets
+│  │  ├─ EduhavenBadges/       # Badge images
+│  │  ├─ sounds/               # Audio files
+│  │  ├─ Logo.svg              # Project logo
+│  │  ├─ GoogleIcon.svg        # Google icon
+│  │  ├─ gssoc.png             # GSSoC banner
+│  │  ├─ focusDockDisplay*.jpg/png  # Focus Dock screenshots
+│  │  ├─ studyRoom.png
+│  │  ├─ studyStats.webp
+│  │  ├─ favicon.ico
+│  │  ├─ apple-touch-icon.png
+│  │  ├─ manifest.json
+│  │  ├─ sw.js
+│  │  ├─ robots.txt
+│  │  └─ sitemap.xml
+│  ├─ .env.example             # Example frontend env variables
+│  ├─ .env.extension           # Browser extension config (e.g., Chrome)
+│  ├─ vite.config.js           # Vite build config
+│  ├─ tailwind.config.js       # Tailwind CSS config
+│  └─ package.json             # Frontend dependencies and scripts
 ├─ 📂 server/                  # Backend code (Node.js/Express)
-│  ├─ 📂 Controller/           # Request handlers and controllers
-│  ├─ 📂 Database/             # Database connection and setup files
-│  ├─ 📂 Middlewares/          # Express middlewares
-│  ├─ 📂 Model/                # Database models/schemas
-│  ├─ 📂 Routes/               # Express route definitions
-│  ├─ 📂 Socket/               # WebSocket/Socket.IO functionality
-│  ├─ 📂 Tests/                # Backend test cases
-│  ├─ 📂 security/             # Security-related files/configs
-│  ├─ 📂 utils/                # Utility/helper functions
-│  ├─ 📄 .env.example           # Example environment variables for backend
-│  ├─ 📄 .gitignore             # Backend-specific ignore rules
-│  ├─ 📄 API_DOCS.md            # API documentation
-│  ├─ 📄 eslint.config.js       # ESLint configuration for backend
-│  ├─ 📄 index.js               # Backend entry point
-│  ├─ 📄 package-lock.json      # Lock file for backend dependencies
-│  └─ 📄 package.json           # Backend dependencies and scripts
-├─ 📄 .DS_Store                # macOS system file (can be ignored)
-├─ 📄 .gitignore               # Root-level Git ignore file
-├─ 📄 .prettierrc.json         # Prettier configuration
-├─ 📄 CODE_OF_CONDUCT.md       # Code of conduct for contributors
-├─ 📄 CONTRIBUTING.md          # Guidelines for contributing to the repo
-├─ 📄 KEEP_ALIVE.md            # Documentation about keeping the app alive (e.g., cold start fixes)
-└─ 📄 LEARN.md                 # Learning or reference notes
+│  ├─ Controller/              # Request handlers
+│  ├─ Routes/                  # Express routes
+│  ├─ Model/                   # Database models/schemas
+│  ├─ Database/                # DB connection/setup
+│  ├─ Middlewares/             # Express middlewares
+│  ├─ Socket/                  # WebSocket functionality
+│  ├─ security/                # Security configs
+│  ├─ utils/                   # Helper functions
+│  ├─ .env.example             # Example backend env variables
+│  ├─ index.js                 # Backend entry point
+│  └─ API_DOCS.md              # API documentation
+├─ CONTRIBUTING.md             # Contribution guidelines
+├─ CODE_OF_CONDUCT.md          # Code of conduct
+├─ .prettierrc.json            # Code formatting rules
+└─ LEARN.md                    # Reference/learning notes
+
 
 
 ## Installation and Setup
