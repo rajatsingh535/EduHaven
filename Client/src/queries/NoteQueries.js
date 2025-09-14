@@ -5,6 +5,11 @@ import {
   getAllNotes,
   getNoteById,
   updateNote,
+  getAllArchivedNotes,
+  archiveNote,
+  getAllTrashedNotes,
+  trashNote,
+  restoreTrashedNote,
 } from "@/api/NoteApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -55,6 +60,58 @@ export const useDeleteNote = () => {
     mutationFn: deleteNote,
     onSuccess: () => {
       queryClient.invalidateQueries(["notes"]);
+    },
+  });
+};
+
+export const useArchivedNotes = () => {
+  return useQuery({
+    queryKey: ["archivedNotes"],
+    queryFn: getAllArchivedNotes,
+  });
+};
+
+export const useArchiveNote = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: archiveNote,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["notes"]);
+      queryClient.invalidateQueries(["archivedNotes"]);
+    },
+  });
+};
+
+// Fetch all trashed notes
+export const useTrashedNotes = () => {
+  return useQuery({
+    queryKey: ["trashedNotes"],
+    queryFn: getAllTrashedNotes,
+  });
+};
+
+// Move note to trash
+export const useTrashNote = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: trashNote,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["notes"]);
+      queryClient.invalidateQueries(["archivedNotes"]);
+      queryClient.invalidateQueries(["trashedNotes"]);
+    },
+  });
+};
+
+// Restore trashed note
+export const useRestoreTrashedNote = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: restoreTrashedNote,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["notes"]);
+      queryClient.invalidateQueries(["trashedNotes"]);
+      queryClient.invalidateQueries(["archivedNotes"]);
     },
   });
 };

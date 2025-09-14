@@ -29,3 +29,28 @@ export const deleteNote = async (id) => {
   const { data } = await axiosInstance.delete(`/note/${id}`);
   return data.message;
 };
+
+export const getAllArchivedNotes = async () => {
+  const { data } = await axiosInstance.get("/note/archive");
+  return data.data;
+};
+
+export const archiveNote = async (id) => {
+  const { data } = await axiosInstance.post(`/note/archieve/${id}`);
+  return data.data;
+};
+
+export const getAllTrashedNotes = async () => {
+  const { data } = await axiosInstance.get("/note/trash");
+  return data.data;
+};
+
+export const trashNote = async (id) => {
+  const { data } = await axiosInstance.post(`/note/trash/${id}`);
+  return data.data;
+};
+
+export const restoreTrashedNote = async (id) => {
+  const { data } = await axiosInstance.put(`/note/restore/${id}`);
+  return data.data;
+};
