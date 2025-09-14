@@ -64,6 +64,65 @@
 - **Database**: MongoDB, Cloudinary
 - **Real-Time Communication**: Socket.IO, WebRTC
 
+
+## 📂Folder Structure📂
+
+```
+📂 repo-root/                  # Root directory of the repository
+├─ 📂 .github/                 # GitHub configuration for issues, PRs, workflows
+│  ├─ 📂 ISSUE_TEMPLATE/       # Templates for GitHub issues
+│  │  ├─ 📄 bug_report.md           # Template for reporting bugs
+│  │  ├─ 📄 config.yml              # Configuration for issue templates
+│  │  ├─ 📄 documentation_update.md # Template for documenting updates
+│  │  └─ 📄 feature_request.md      # Template for requesting new features
+│  ├─ 📂 workflows/            # CI/CD and automated workflows
+│  │  ├─ 📄 eslint.yml                # Runs ESLint checks
+│  │  ├─ 📄 issue-create-automate-message.yml # Automates issue creation messages
+│  │  ├─ 📄 pr-validation.yml        # Validates pull requests
+│  │  └─ 📄 prettier.yml              # Runs Prettier formatting
+│  └─ 📄 PULL_REQUEST_TEMPLATE.md # Template for pull requests
+├─ 📂 client/                  # Frontend code (likely a React/Vite project)
+│  ├─ 📂 public/               # Public static files (images, icons, etc.)
+│  ├─ 📂 src/                  # Source code of the frontend (components, pages, styles)
+│  ├─ 📄 .env.example           # Example environment variables
+│  ├─ 📄 .env.extension         # Extended environment variables
+│  ├─ 📄 .gitignore             # Files to be ignored by Git
+│  ├─ 📄 components.json        # Configuration/list of frontend components
+│  ├─ 📄 eslint.config.js       # ESLint configuration for frontend
+│  ├─ 📄 index.html             # Main HTML entry point
+│  ├─ 📄 jsconfig.json          # JavaScript/TypeScript configuration
+│  ├─ 📄 package-lock.json      # Lock file for npm dependencies
+│  ├─ 📄 package.json           # Frontend dependencies and scripts
+│  ├─ 📄 postcss.config.js      # PostCSS configuration
+│  ├─ 📄 tailwind.config.js     # Tailwind CSS configuration
+│  ├─ 📄 vercel.json            # Vercel deployment configuration
+│  └─ 📄 vite.config.js         # Vite build tool configuration
+├─ 📂 server/                  # Backend code (Node.js/Express)
+│  ├─ 📂 Controller/           # Request handlers and controllers
+│  ├─ 📂 Database/             # Database connection and setup files
+│  ├─ 📂 Middlewares/          # Express middlewares
+│  ├─ 📂 Model/                # Database models/schemas
+│  ├─ 📂 Routes/               # Express route definitions
+│  ├─ 📂 Socket/               # WebSocket/Socket.IO functionality
+│  ├─ 📂 Tests/                # Backend test cases
+│  ├─ 📂 security/             # Security-related files/configs
+│  ├─ 📂 utils/                # Utility/helper functions
+│  ├─ 📄 .env.example           # Example environment variables for backend
+│  ├─ 📄 .gitignore             # Backend-specific ignore rules
+│  ├─ 📄 API_DOCS.md            # API documentation
+│  ├─ 📄 eslint.config.js       # ESLint configuration for backend
+│  ├─ 📄 index.js               # Backend entry point
+│  ├─ 📄 package-lock.json      # Lock file for backend dependencies
+│  └─ 📄 package.json           # Backend dependencies and scripts
+├─ 📄 .DS_Store                # macOS system file (can be ignored)
+├─ 📄 .gitignore               # Root-level Git ignore file
+├─ 📄 .prettierrc.json         # Prettier configuration
+├─ 📄 CODE_OF_CONDUCT.md       # Code of conduct for contributors
+├─ 📄 CONTRIBUTING.md          # Guidelines for contributing to the repo
+├─ 📄 KEEP_ALIVE.md            # Documentation about keeping the app alive (e.g., cold start fixes)
+└─ 📄 LEARN.md                 # Learning or reference notes
+
+
 ## Installation and Setup
 - Make sure you've joined our [discord server](https://discord.gg/CbsNFUDC) so you can connect in case you face any issues.
 - **Prerequisites:** Node.js, MongoDB, Git
