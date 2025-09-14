@@ -46,7 +46,7 @@ jobs:
       - name: Setup Node.js (root)
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
 
       - name: Run Client ESLint (if present)
@@ -77,7 +77,7 @@ jobs:
       - name: Setup Node.js (Client)
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
           cache-dependency-path: Client/package-lock.json
 
@@ -100,7 +100,7 @@ jobs:
       - name: Setup Node.js (Server)
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
           cache-dependency-path: Server/package-lock.json
 
