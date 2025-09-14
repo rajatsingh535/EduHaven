@@ -8,13 +8,6 @@ const focusDockDisplay3 = "/focusDockDisplay3.jpg";
 const FOCUS_DOCK_URL =
   "https://play.google.com/store/apps/details?id=com.rishukumarcodes.Standbyclock";
 
-// GSSoC Navigator Product
-const gssocNavigatorIcon =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlkIn00HvFnjK7qiCrZZ_JGw0P8-48NKg8rw&s";
-const gssocNavigatorDisplay = "/navigator1.png";
-const gssocNavigatorDisplay2 = "/navigator2.png";
-const GSSOC_NAVIGATOR_URL = "https://girlscirpt2025.vercel.app";
-
 // Product data
 const products = [
   {
@@ -24,15 +17,6 @@ const products = [
     icon: focusDockIcon,
     url: FOCUS_DOCK_URL,
     slides: [focusDockDisplay, focusDockDisplay2, focusDockDisplay3],
-  },
-  {
-    id: "gssoc-navigator",
-    name: "GSSoC Navigator",
-    description:
-      "Navigate your way through GSSoC with our comprehensive gssoc project navigator.",
-    icon: gssocNavigatorIcon,
-    url: GSSOC_NAVIGATOR_URL,
-    slides: [gssocNavigatorDisplay, gssocNavigatorDisplay2],
   },
 ];
 
@@ -121,7 +105,8 @@ function AdCard({ slideInterval = 30000 }) {
       </div>
 
       {/* Product indicator dots */}
-      <div className="flex justify-center gap-2 mt-2">
+      {/* Since there is one only ad */}
+      {/* <div className="flex justify-center gap-2 mt-2">
         {products.map((_, idx) => (
           <div
             key={idx}
@@ -130,7 +115,7 @@ function AdCard({ slideInterval = 30000 }) {
             }`}
           />
         ))}
-      </div>
+      </div> */}
     </>
   );
 }
