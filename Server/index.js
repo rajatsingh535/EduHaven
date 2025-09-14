@@ -27,13 +27,10 @@ export const PORT = Number(process.env.PORT) || 3000;
 export const NODE_ENV = process.env.NODE_ENV || "development";
 export const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
 
-// Apply project-specific security middleware (keep this)
+// security middleware
 applySecurity(app);
-
 applyCommonMiddleware(app);
-
 mountHealthRoutes(app);
-
 mountRoutes(app);
 
 // 404 + error middleware
@@ -41,10 +38,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 const server = createServer(app);
-
-// Create socket.io instance; we will initialize handlers after DB connect
 const io = createSocket(server);
-
 setupGracefulShutdown(server);
 
 async function start() {
