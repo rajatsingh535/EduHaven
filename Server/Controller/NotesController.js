@@ -13,13 +13,22 @@ export const getAllNotes = async (req, res) => {
   try {
     const userId = req.user._id;
 
+    // 🔹 Clean up trashed notes older than 30 days
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    await Note.deleteMany({
+      status: "trashed",
+      trashedAt: { $lte: thirtyDaysAgo },
+    });
+
+    // 🔹 Fetch only active notes (exclude archive & trash)
     const notes = await Note.find({
+      status: "active",
       $or: [
         { owner: userId },
         { "collaborators.user": userId },
         { visibility: "public" },
       ],
-    });
+    }).sort({ pinnedAt: -1, updatedAt: -1 });
 
     res.status(200).json({ success: true, data: notes });
   } catch (error) {
@@ -78,7 +87,8 @@ export const createNote = async (req, res) => {
 
 export const updateNote = async (req, res) => {
   try {
-    const { title, content, color, visibility, collaborators } = req.body;
+    const { title, content, color, visibility, collaborators, pinnedAt } =
+      req.body;
 
     const userId = req.user._id;
     const note = await Note.findById(req.params.id);
@@ -100,6 +110,11 @@ export const updateNote = async (req, res) => {
     if (content) note.content = content;
     if (color) note.color = color;
     if (visibility) note.visibility = visibility;
+    if (pinnedAt === true) {
+      note.pinnedAt = new Date();
+    } else if (pinnedAt === false) {
+      note.pinnedAt = null;
+    }
     if (isOwner && collaborators) {
       note.collaborators = collaborators;
     }
@@ -176,5 +191,103 @@ export const uploadNoteImage = async (req, res) => {
       error: "Failed to upload note image",
       details: error.message,
     });
+  }
+};
+
+export const getArchivedNotes = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const notes = await Note.find({
+      status: "archived",
+      owner: userId,
+    }).sort({ updatedAt: -1 });
+
+    res.status(200).json({ success: true, data: notes });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const archiveNote = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const note = await Note.findById(req.params.id);
+
+    if (!note || note.owner.toString() !== userId.toString()) {
+      return res.status(403).json({ success: false, error: "Not authorized" });
+    }
+
+    if (note.status == "archived") {
+      note.status = "active";
+    } else if (note.status == "active") {
+      note.status = "archived";
+    }
+
+    note.trashedAt = null; // reset if it was in trash before
+    await note.save();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Note archived", data: note });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const getTrashedNotes = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const notes = await Note.find({
+      status: "trashed",
+      owner: userId,
+    }).sort({ trashedAt: -1 });
+
+    res.status(200).json({ success: true, data: notes });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const moveToTrash = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const note = await Note.findById(req.params.id);
+
+    if (!note || note.owner.toString() !== userId.toString()) {
+      return res.status(403).json({ success: false, error: "Not authorized" });
+    }
+
+    note.status = "trashed";
+    note.trashedAt = new Date();
+    await note.save();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Note moved to trash", data: note });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const restoreNote = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const note = await Note.findById(req.params.id);
+
+    if (!note || note.owner.toString() !== userId.toString()) {
+      return res.status(403).json({ success: false, error: "Not authorized" });
+    }
+
+    note.status = "active";
+    note.trashedAt = null;
+    await note.save();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Note restored", data: note });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
 };

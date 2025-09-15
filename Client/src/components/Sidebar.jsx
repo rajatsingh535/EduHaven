@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import {
   BarChart2,
   Gamepad2,
@@ -37,7 +37,7 @@ function Sidebar() {
     }
   }, [location.pathname]);
 
-  const SidebarLink = React.forwardRef(
+  const SidebarLink = forwardRef(
     ({ to, IconComponent, label, isActive }, ref) => {
       return (
         <Link
@@ -122,11 +122,11 @@ function Sidebar() {
 
         <hr className="border-[var(--txt-disabled)] opacity-50 md:my-2.5 2xl:my-4 mx-4" />
         <SidebarLink
-          to="/project-details"
+          to="/about"
           IconComponent={BadgeInfo}
           label="About"
-          isActive={location.pathname === "/project-details"}
-          ref={(el) => (linkRefs.current["/project-details"] = el)}
+          isActive={location.pathname === "/about"}
+          ref={(el) => (linkRefs.current["/about"] = el)}
         />
       </div>
 

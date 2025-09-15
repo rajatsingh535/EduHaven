@@ -6,6 +6,7 @@ import { levels } from "@/components/stats/MonthlyLevel";
 import { fetchConsolidatedStats } from "@/api/timerApi";
 import { useTimerStore } from "@/stores/timerStore";
 import { useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
 
 
 // Variants for dropdown buttons
@@ -185,12 +186,14 @@ function StatsSummary() {
           <p className="text-red-400 text-sm">
             {error.message || "Failed to load statistics"}
           </p>
-          <button
+          <Button
             onClick={handleRefresh}
+            variant="default"
+            size="default"
             className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 transition-colors"
           >
             Retry
-          </button>
+          </Button>
         </div>
       </motion.div>
     );
@@ -206,10 +209,11 @@ function StatsSummary() {
     >
       <div className="flex items-center justify-between -mb-3">
         <div ref={dropdownRef} className="relative ml-auto">
-          <motion.button
+          <Button
             onClick={() => setIsOpen(!isOpen)}
+            variant="transparent"
+            size="default"
             className="flex items-center space-x-1 txt-dim hover:txt"
-            transition={{ type: "spring", stiffness: 300 }}
           >
             <span>{selectedTime}</span>
             <motion.span
@@ -218,7 +222,7 @@ function StatsSummary() {
             >
               <ChevronDown className="w-4 h-4" />
             </motion.span>
-          </motion.button>
+          </Button>
           <AnimatePresence>
             {isOpen && (
               <motion.div
@@ -229,20 +233,18 @@ function StatsSummary() {
                 transition={{ duration: 0.2 }}
               >
                 {Object.keys(studyData).map((time) => (
-                  <motion.button
+                  <Button
                     key={time}
-                    className="block w-full text-left px-4 py-2 btn-rad"
-                    variants={dropdownButtonVariants}
-                    initial="initial"
-                    whileHover="hover"
-                    transition={{ duration: 0.2 }}
                     onClick={() => {
                       setSelectedTime(time);
                       setIsOpen(false);
                     }}
+                    variant="default"
+                    size="default"
+                    className="block w-full text-left px-4 py-2 btn-rad"
                   >
                     {time}
-                  </motion.button>
+                  </Button>
                 ))}
               </motion.div>
             )}
