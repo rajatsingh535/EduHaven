@@ -7,9 +7,8 @@ import {
 } from "@/queries/friendQueries";
 import { UserPlus } from "lucide-react";
 import PropTypes from "prop-types";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 function UserCard({ user, selectedTab }) {
   const { mutate: sendRequest } = useSendRequest();
@@ -17,8 +16,6 @@ function UserCard({ user, selectedTab }) {
   const { mutate: rejectRequest } = useRejectRequest();
   const { mutate: acceptRequest } = useAcceptRequest();
   const { mutate: removeFriend } = useRemoveFriend();
-
-  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className="bg-sec p-3 pt-4 rounded-3xl flex-1 basis-[250px] max-w-sm flex flex-col justify-between">
@@ -38,9 +35,7 @@ function UserCard({ user, selectedTab }) {
           <div className="text-lg font-semibold overflow-hidden whitespace-nowrap text-ellipsis w-full">
             {`${user.FirstName} ${user.LastName || ""}`}
           </div>
-          <p className={`text-sm txt-dim ${isExpanded ? "" : "line-clamp-2"}`}>
-            {user.Bio}
-          </p>
+          <p className={"text-sm txt-dim line-clamp-2"}>{user.Bio}</p>
 
           <div className="mt-2 mb-1">
             {user.OtherDetails?.interests && (
@@ -70,7 +65,6 @@ function UserCard({ user, selectedTab }) {
             <UserPlus className="w-5 h-5" />
             Add Friend
           </Button>
-
         )}
 
         {selectedTab === "suggested" && user.requestSent && (

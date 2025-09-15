@@ -1,7 +1,6 @@
 // No connection to backend, runs entirely on the frontend
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Clock12, Coffee, RotateCcw, Edit3, Check } from "lucide-react";
 import AnimatedDigits from "./AnimatedDigits";
@@ -100,11 +99,15 @@ function BreakTimer() {
           size="default"
           className={`relative px-6 py-2 rounded-lg flex items-center gap-2 transition-colors duration-300 ease-in-out ${isRunning ? "bg-black/20 hover:bg-black/30" : "bg-purple-600 hover:bg-purple-700"}`}
         >
-          <span className={`flex items-center gap-2 transition-opacity duration-300 ${isRunning ? "opacity-0" : "opacity-100"}`}>
+          <span
+            className={`flex items-center gap-2 transition-opacity duration-300 ${isRunning ? "opacity-0" : "opacity-100"}`}
+          >
             <Coffee className="w-5 h-5" />
             <span>Start Break</span>
           </span>
-          <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-300 ${isRunning ? "opacity-100" : "opacity-0"}`}>
+          <span
+            className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-300 ${isRunning ? "opacity-100" : "opacity-0"}`}
+          >
             <Clock12 className="w-5 h-5 animate-spin" />
             <span>Pause</span>
           </span>

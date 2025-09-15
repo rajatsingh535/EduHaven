@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 
 function ScientificCalculator() {
   const [input, setInput] = useState("");
@@ -57,7 +56,7 @@ function ScientificCalculator() {
       } else {
         setOutput("Invalid expression");
       }
-    } catch (error) {
+    } catch {
       setOutput("Error");
     }
   };

@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
-import axiosInstance from "@/utils/axios";
-import Calendar from "react-calendar";
-import { Plus } from "lucide-react";
-import "react-calendar/dist/Calendar.css";
-import "./ReactCustomCalendar.css";
-import { toast } from "react-toastify";
-import { motion } from "framer-motion";
-import styles from "./SetGoals.module.css";
 import { Button } from "@/components/ui/button";
+import axiosInstance from "@/utils/axios";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { toast } from "react-toastify";
+import "./ReactCustomCalendar.css";
 
 const Setgoals = ({ onGoalCreated }) => {
   const [title, setTitle] = useState("");
@@ -68,8 +66,9 @@ const Setgoals = ({ onGoalCreated }) => {
 
   return (
     <div
-      className={`px-4 pt-2 rounded-xl ${title.trim() !== "" ? "bg-ter shadow" : ""
-        }`}
+      className={`px-4 pt-2 rounded-xl ${
+        title.trim() !== "" ? "bg-ter shadow" : ""
+      }`}
       style={{ containerType: "inline-size" }}
     >
       <div className="flex items-center px-2">

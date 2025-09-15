@@ -1,4 +1,3 @@
-import React from "react";
 import UserCardSkeleton from "./UserCardSkeleton";
 import { Loader2Icon } from "lucide-react";
 
@@ -11,7 +10,10 @@ const FriendsSkeletonLoader = ({ count = 12 }) => {
         ))}
       </div>
       <div className="mx-auto w-fit">
-        <Loader2Icon size={50} className="mt-10 animate-spin text-[var(--bg-sec)]" />
+        <Loader2Icon
+          size={50}
+          className="mt-10 animate-spin text-[var(--bg-sec)]"
+        />
       </div>
     </>
   );

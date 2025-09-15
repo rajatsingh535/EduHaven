@@ -195,8 +195,9 @@ function SignUp() {
           >
             Password{" "}
             <span
-              className={`text-sm ml-52 font-semibold ${strengthLevels[strength - 1]?.color
-                }`}
+              className={`text-sm ml-52 font-semibold ${
+                strengthLevels[strength - 1]?.color
+              }`}
             >
               {strengthLevels[strength - 1]?.level}
             </span>
@@ -237,10 +238,11 @@ function SignUp() {
             type="submit"
             disabled={isSubmitting}
             variant="default"
-            className={`w-full rounded-md py-2 px-4 font-semibold ${isSubmitting
-              ? "opacity-50 cursor-not-allowed bg-gray-400"
-              : "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-              }`}
+            className={`w-full rounded-md py-2 px-4 font-semibold ${
+              isSubmitting
+                ? "opacity-50 cursor-not-allowed bg-gray-400"
+                : "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            }`}
           >
             {isSubmitting ? "Submitting..." : "Create account"}
           </Button>

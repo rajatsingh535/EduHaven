@@ -5,7 +5,6 @@ import { RotateCcw } from "lucide-react";
 
 function Slogan() {
   const [quote, setQuote] = useState("Stay hungry; stay foolish.");
-  const [author, setAuthor] = useState("");
   const [displayMode, setDisplayMode] = useState("greeting");
   const [firstName, setFirstName] = useState("User");
 
@@ -159,17 +158,14 @@ function Slogan() {
 
   const forceRefreshQuote = async () => {
     setQuote("Fetching new quote...");
-    setAuthor("");
     try {
       const fetchedData = await fetchQuote();
       setQuote(fetchedData.quote);
-      setAuthor(fetchedData.author);
       localStorage.setItem("dailyQuote", fetchedData.quote);
       localStorage.setItem("quoteAuthor", fetchedData.author);
       localStorage.setItem("quoteTimestamp", Date.now().toString());
     } catch (error) {
       setQuote("Failed to fetch quote.");
-      setAuthor("Try again");
       console.error("Error during refresh:", error);
     }
   };
@@ -182,15 +178,12 @@ function Slogan() {
     setFirstName(getFirstNameFromJWT());
 
     const cachedQuote = localStorage.getItem("dailyQuote");
-    const cachedAuthor = localStorage.getItem("quoteAuthor");
 
     if (cachedQuote && !shouldRefreshQuote()) {
       setQuote(cachedQuote);
-      setAuthor(cachedAuthor || "");
     } else {
       fetchQuote().then((fetchedData) => {
         setQuote(fetchedData.quote);
-        setAuthor(fetchedData.author);
         localStorage.setItem("dailyQuote", fetchedData.quote);
         localStorage.setItem("quoteAuthor", fetchedData.author);
         localStorage.setItem("quoteTimestamp", Date.now().toString());

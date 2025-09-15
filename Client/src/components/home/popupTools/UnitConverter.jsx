@@ -50,7 +50,7 @@ function UnitConverter() {
       setInputUnit(categoryUnits[0]);
       setOutputUnit(categoryUnits[1] || categoryUnits[0]);
     }
-  }, [category]);
+  }, [category, units]);
 
   const convertTemperature = (value, from, to) => {
     if (from === to) return value;
@@ -65,27 +65,27 @@ function UnitConverter() {
     return "Unsupported";
   };
 
-  const handleConvert = (val) => {
-    if (val === "") {
-      setResult("");
-      return;
-    }
-    const number = parseFloat(val);
-    if (isNaN(number)) {
-      setResult("Invalid input");
-      return;
-    }
-    let res;
-    if (category === "temperature") {
-      res = convertTemperature(number, inputUnit, outputUnit);
-    } else {
-      const baseValue = number * units[category][inputUnit];
-      res = baseValue / units[category][outputUnit];
-    }
-    setResult(Number.isNaN(res) ? "Error" : parseFloat(res.toFixed(6)));
-  };
-
   useEffect(() => {
+    const handleConvert = (val) => {
+      if (val === "") {
+        setResult("");
+        return;
+      }
+      const number = parseFloat(val);
+      if (isNaN(number)) {
+        setResult("Invalid input");
+        return;
+      }
+      let res;
+      if (category === "temperature") {
+        res = convertTemperature(number, inputUnit, outputUnit);
+      } else {
+        const baseValue = number * units[category][inputUnit];
+        res = baseValue / units[category][outputUnit];
+      }
+      setResult(Number.isNaN(res) ? "Error" : parseFloat(res.toFixed(6)));
+    };
+
     handleConvert(inputValue);
   }, [inputValue, inputUnit, outputUnit, category]);
 
@@ -122,15 +122,15 @@ function UnitConverter() {
           >
             {category === "temperature"
               ? units.temperature.map((u) => (
-                <option key={u} value={u}>
-                  {u}
-                </option>
-              ))
+                  <option key={u} value={u}>
+                    {u}
+                  </option>
+                ))
               : Object.keys(units[category]).map((unit) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
           </select>
         </div>
         <Button
@@ -156,15 +156,15 @@ function UnitConverter() {
           >
             {category === "temperature"
               ? units.temperature.map((u) => (
-                <option key={u} value={u}>
-                  {u}
-                </option>
-              ))
+                  <option key={u} value={u}>
+                    {u}
+                  </option>
+                ))
               : Object.keys(units[category]).map((unit) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
           </select>
         </div>
       </div>

@@ -195,7 +195,7 @@ const Notes = () => {
             )
             .run();
         }
-      } catch (err) {
+      } catch {
         const didReplace = replacePlaceholder(
           placeholder,
           "Failed to upload image"
@@ -263,7 +263,7 @@ const Notes = () => {
     setShowColorPicker(null);
   };
 
-  const duplicateNote = (note) => {
+  const duplicateNote = () => {
     // const newNote = {
     //   ...note,
     //   id: Date.now(),
