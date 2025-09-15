@@ -234,7 +234,7 @@ function Slogan() {
           className="text-center w-full max-w-full px-2 md:px-4"
         >
           {displayMode === "quote" ? (
-            <div className="hidden md:flex items-center justify-center gap-2 md:gap-4 flex-nowrap whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="hidden md:flex items-center justify-center gap-2 md:gap-4 flex-nowrap whitespace-nowrap overflow-hidden text-ellipsis text-xl 2xl:text-2xl">
               <div className="font-semibold break-words max-w-full">
                 {quote}
               </div>
