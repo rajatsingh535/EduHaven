@@ -44,7 +44,7 @@ function NotesComponent() {
       clearTimeout(titleTimeoutRef.current);
       clearTimeout(contentTimeoutRef.current);
     };
-  }, [fetchNotes]);
+  }, []);
 
   const fetchNotes = async () => {
     try {

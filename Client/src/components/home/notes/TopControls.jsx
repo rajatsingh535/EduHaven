@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
 function TopControls({ addNew, next, prev, notes, currentPage }) {
   return (
-    <div className="flex gap-1 items-center absolute right-0 top-6 z-50">
+    <div className="flex gap-1 pr-4 items-center absolute right-0 top-6 z-50">
       <Button
         title="Create new note"
         onClick={addNew}
@@ -13,7 +13,7 @@ function TopControls({ addNew, next, prev, notes, currentPage }) {
       >
         <Plus />
       </Button>
-      <div className="bg-[var(--bg-sec)] flex gap-2.5 items-center px-2.5 pl-3 rounded-l-full">
+      <div className="bg-[var(--bg-sec)] flex gap-2.5 items-center px-2.5 pl-3 rounded-full">
         <span className="opacity-90 text-lg">
           {notes.length > 0 ? `${currentPage + 1}/${notes.length}` : "1/1"}
         </span>
