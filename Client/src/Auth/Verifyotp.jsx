@@ -121,8 +121,8 @@ const OtpInput = () => {
           const error = await response.json();
           setError(
             error.message ||
-            error.error ||
-            "Verification failed. Please try again."
+              error.error ||
+              "Verification failed. Please try again."
           );
           setOtp(["", "", "", "", "", ""]);
           inputRefs.current[0]?.focus();
@@ -194,7 +194,7 @@ const OtpInput = () => {
         // Handle signup OTP resend if you have that endpoint
         toast.info("Please restart the signup process for a new OTP.");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to resend OTP. Please try again.");
     }
   };
@@ -277,12 +277,13 @@ const OtpInput = () => {
               onKeyDown={(e) => handleKeyDown(index, e)}
               maxLength="1"
               className={`w-12 h-12 text-center text-xl font-bold border-2 rounded-xl transition-all duration-200
-                  ${digit
-                  ? "border-blue-500 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200"
-                  : error
-                    ? "border-red-300 bg-red-50 dark:bg-red-900"
-                    : "border-gray-300 dark:border-gray-600 hover:border-blue-300 focus:border-blue-500"
-                } focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800`}
+                  ${
+                    digit
+                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200"
+                      : error
+                        ? "border-red-300 bg-red-50 dark:bg-red-900"
+                        : "border-gray-300 dark:border-gray-600 hover:border-blue-300 focus:border-blue-500"
+                  } focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800`}
               disabled={isVerifying}
             />
           ))}

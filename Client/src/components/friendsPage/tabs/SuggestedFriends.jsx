@@ -1,8 +1,8 @@
 import { useAllSuggestedUsers } from "@/queries/friendQueries";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import FriendsSkeletonLoader from "../../skeletons/FriendsSkeletonLoader";
 import SearchBar from "../SearchBar";
 import UserCard from "../UserCard";
-import FriendsSkeletonLoader from "../../skeletons/FriendsSkeletonLoader";
 
 export default function SuggestedFriends() {
   const [searchTerm, setSearchTerm] = useState("");

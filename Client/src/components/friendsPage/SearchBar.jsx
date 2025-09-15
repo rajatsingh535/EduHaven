@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import PropTypes from "prop-types";
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 function SearchBar({ onSearch, placeholder = "Search friends..." }) {
   const [searchTerm, setSearchTerm] = useState("");

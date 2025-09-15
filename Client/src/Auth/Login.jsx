@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
-import { toast } from "react-toastify";
+import { Button } from "@/components/ui/button";
 import axiosInstance from "@/utils/axios";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button"
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const backendUrl = import.meta.env.VITE_API_URL;
 
@@ -22,7 +22,6 @@ function Login() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    watch,
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -49,7 +48,6 @@ function Login() {
     }
   };
 
-  const password = watch("Password", "");
   return (
     <div className="space-y-8 ">
       <div className="text-center ">
@@ -157,10 +155,11 @@ function Login() {
             type="submit"
             disabled={isSubmitting}
             variant="default"
-            className={`w-full rounded-md py-2 px-4 font-semibold ${isSubmitting
-              ? "opacity-50 cursor-not-allowed bg-gray-400"
-              : "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-              }`}
+            className={`w-full rounded-md py-2 px-4 font-semibold ${
+              isSubmitting
+                ? "opacity-50 cursor-not-allowed bg-gray-400"
+                : "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            }`}
           >
             {isSubmitting ? "Submitting..." : "Log In"}
           </Button>

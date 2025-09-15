@@ -19,7 +19,7 @@ const variants = {
     scale: 1,
   },
   exit: (direction) => ({
-    x: direction > 0 ? -150 : 150, 
+    x: direction > 0 ? -150 : 150,
     opacity: 0,
     scale: 0.95,
   }),
@@ -44,7 +44,7 @@ function NotesComponent() {
       clearTimeout(titleTimeoutRef.current);
       clearTimeout(contentTimeoutRef.current);
     };
-  }, []);
+  }, [fetchNotes]);
 
   const fetchNotes = async () => {
     try {

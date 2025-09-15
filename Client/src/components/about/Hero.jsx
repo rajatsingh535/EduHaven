@@ -1,7 +1,7 @@
-import { GitFork, MessageSquare, Star } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { delay, easeInOut, easeOut, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { easeOut, motion } from "framer-motion";
+import { GitFork, MessageSquare, Star } from "lucide-react";
+import { useEffect, useState } from "react";
 
 function Hero({ url, isLoading, stars, forks }) {
   // Hook for handling shuffle effect

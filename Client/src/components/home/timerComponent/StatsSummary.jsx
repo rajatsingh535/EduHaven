@@ -4,12 +4,6 @@ import { ChevronDown, Clock4, Flame, BarChart2 } from "lucide-react";
 import { useConsolidatedStats } from "@/queries/timerQueries";
 import { Button } from "@/components/ui/button";
 
-// Variants for dropdown buttons
-const dropdownButtonVariants = {
-  initial: { backgroundColor: "transparent" },
-  hover: { backgroundColor: "var(--bg-ter)" },
-};
-
 function StatsSummary() {
   const [selectedTime, setSelectedTime] = useState("Today");
   const [isOpen, setIsOpen] = useState(false);
@@ -24,40 +18,40 @@ function StatsSummary() {
   // Prepare study data from the query response
   const studyData = stats
     ? {
-      Today: `${stats.timePeriods?.today || "0.0"} h`,
-      "This week": `${stats.timePeriods?.thisWeek || "0.0"} h`,
-      "This month": `${stats.timePeriods?.thisMonth || "0.0"} h`,
-      "All time": `${stats.timePeriods?.allTime || "0.0"} h`,
-    }
+        Today: `${stats.timePeriods?.today || "0.0"} h`,
+        "This week": `${stats.timePeriods?.thisWeek || "0.0"} h`,
+        "This month": `${stats.timePeriods?.thisMonth || "0.0"} h`,
+        "All time": `${stats.timePeriods?.allTime || "0.0"} h`,
+      }
     : {
-      Today: "0.0 h",
-      "This week": "0.0 h",
-      "This month": "0.0 h",
-      "All time": "0.0 h",
-    };
+        Today: "0.0 h",
+        "This week": "0.0 h",
+        "This month": "0.0 h",
+        "All time": "0.0 h",
+      };
 
   // Prepare user stats from the query response
   const userStats = stats
     ? {
-      rank: stats.rank || 0,
-      totalUsers: stats.totalUsers || 0,
-      streak: stats.streak || 0,
-      level: stats.level || {
-        name: "Beginner",
-        progress: 0,
-        hoursToNextLevel: "2.0",
-      },
-    }
+        rank: stats.rank || 0,
+        totalUsers: stats.totalUsers || 0,
+        streak: stats.streak || 0,
+        level: stats.level || {
+          name: "Beginner",
+          progress: 0,
+          hoursToNextLevel: "2.0",
+        },
+      }
     : {
-      rank: 0,
-      totalUsers: 0,
-      streak: 0,
-      level: {
-        name: "Beginner",
-        progress: 0,
-        hoursToNextLevel: "2.0",
-      },
-    };
+        rank: 0,
+        totalUsers: 0,
+        streak: 0,
+        level: {
+          name: "Beginner",
+          progress: 0,
+          hoursToNextLevel: "2.0",
+        },
+      };
 
   // Handle click outside dropdown
   useEffect(() => {

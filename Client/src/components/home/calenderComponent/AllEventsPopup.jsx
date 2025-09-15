@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Edit, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 const AllEventsPopup = ({ events, onClose, refreshEvents }) => {
   const [editingEvent, setEditingEvent] = useState(null);
@@ -124,10 +124,11 @@ const AllEventsPopup = ({ events, onClose, refreshEvents }) => {
                   <div
                     key={event._id}
                     data-date={event.date.split("T")[0]}
-                    className={`p-3 rounded-lg border ${isToday
-                      ? "border-purple-500 bg-purple-500/10"
-                      : "border-[var(--bg-ter)]"
-                      }`}
+                    className={`p-3 rounded-lg border ${
+                      isToday
+                        ? "border-purple-500 bg-purple-500/10"
+                        : "border-[var(--bg-ter)]"
+                    }`}
                   >
                     {editingEvent === event._id ? (
                       <div className="space-y-2">

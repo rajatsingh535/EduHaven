@@ -85,10 +85,10 @@ const GoalsComponent = () => {
       prev.map((todo) =>
         todo._id === id
           ? {
-            ...todo,
-            completed: !todo.completed,
-            status: todo.completed ? "open" : "closed",
-          }
+              ...todo,
+              completed: !todo.completed,
+              status: todo.completed ? "open" : "closed",
+            }
           : todo
       )
     );
@@ -295,8 +295,9 @@ const GoalsComponent = () => {
       ) : (
         <div className="flex-grow">
           <span
-            className={`text-lg ${todo.completed ? "line-through txt-dim" : "txt-dim"
-              }`}
+            className={`text-lg ${
+              todo.completed ? "line-through txt-dim" : "txt-dim"
+            }`}
           >
             {todo.title}
           </span>
@@ -341,8 +342,11 @@ const GoalsComponent = () => {
               onClick={() => handleToggleRepeat(todo._id)}
               variant="transparent"
               size="icon"
-              className={`p-1 rounded transition-colors ${todo.repeatEnabled ? "text-blue-500 bg-blue-100/10" : "txt-dim hover:text-blue-500"
-                }`}
+              className={`p-1 rounded transition-colors ${
+                todo.repeatEnabled
+                  ? "text-blue-500 bg-blue-100/10"
+                  : "txt-dim hover:text-blue-500"
+              }`}
               title={todo.repeatEnabled ? "Disable repeat" : "Enable repeat"}
             >
               <Repeat className="h-4 w-4" />

@@ -1,12 +1,5 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Trash,
-  Plus,
-  RefreshCcwDot,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
 function TopControls({ addNew, next, prev, notes, currentPage }) {
   return (

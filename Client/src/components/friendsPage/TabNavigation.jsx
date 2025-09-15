@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 function TabNavigation({ activeTab, onTabChange }) {
   const tabs = [
     { id: "suggested", label: "Suggested" },
@@ -21,7 +21,6 @@ function TabNavigation({ activeTab, onTabChange }) {
           >
             {tab.label}
           </Button>
-
         ))}
       </div>
     </div>

@@ -215,7 +215,7 @@ const Notes = () => {
             )
             .run();
         }
-      } catch (err) {
+      } catch {
         const didReplace = replacePlaceholder(
           placeholder,
           "Failed to upload image"

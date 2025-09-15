@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
 import { Archive, FileText, Plus, Search, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
+import { motion } from "framer-motion";
 
 const NoteHeader = ({
   createNewNote,

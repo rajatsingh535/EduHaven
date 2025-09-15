@@ -1,5 +1,5 @@
 import { EditorContent, useEditor } from "@tiptap/react";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import axiosInstance from "@/utils/axios";

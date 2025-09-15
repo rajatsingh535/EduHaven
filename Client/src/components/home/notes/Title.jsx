@@ -1,5 +1,3 @@
-import React from "react";
-
 function NoteTitle({ notes, currentPage, titleChange, titleError }) {
   return (
     <div className="flex justify-between px-2 gap-4">

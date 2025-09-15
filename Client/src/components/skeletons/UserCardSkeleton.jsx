@@ -1,11 +1,6 @@
-import React from "react";
-
 const UserCardSkeleton = () => {
   return (
-
-    <div
-      className="flex-1 basis-[250px] max-w-sm p-3 rounded-3xl pt-4 bg-[var(--bg-sec)]"
-    >
+    <div className="flex-1 basis-[250px] max-w-sm p-3 rounded-3xl pt-4 bg-[var(--bg-sec)]">
       <div className="animate-pulse flex flex-col items-center text-center">
         {/* Avatar Placeholder */}
         <div className="w-24 h-24 rounded-full mb-3 bg-[var(--bg-primary)]"></div>

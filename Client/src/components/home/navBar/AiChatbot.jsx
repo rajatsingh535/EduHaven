@@ -287,14 +287,16 @@ const Ai = () => {
                       variants={messageVariants}
                       initial="hidden"
                       animate="visible"
-                      className={`flex flex-col ${msg.type === "user" ? "items-end" : "items-start"
-                        }`}
+                      className={`flex flex-col ${
+                        msg.type === "user" ? "items-end" : "items-start"
+                      }`}
                     >
                       <p
-                        className={`py-2 px-4 rounded-lg ${msg.type === "user"
-                          ? "bg-sec txt"
-                          : "bg-transparent txt"
-                          }`}
+                        className={`py-2 px-4 rounded-lg ${
+                          msg.type === "user"
+                            ? "bg-sec txt"
+                            : "bg-transparent txt"
+                        }`}
                       >
                         {msg.text}
                       </p>
