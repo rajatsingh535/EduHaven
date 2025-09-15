@@ -218,7 +218,12 @@ export const archiveNote = async (req, res) => {
       return res.status(403).json({ success: false, error: "Not authorized" });
     }
 
-    note.status = "archived";
+    if (note.status == "archived") {
+      note.status = "active";
+    } else if (note.status == "active") {
+      note.status = "archived";
+    }
+
     note.trashedAt = null; // reset if it was in trash before
     await note.save();
 

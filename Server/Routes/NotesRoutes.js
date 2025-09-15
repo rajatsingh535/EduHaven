@@ -80,23 +80,6 @@ router.post(
 // Route to get all notes
 router.get("/", authMiddleware, getAllNotes);
 
-// Route to get a specific note by its ID
-router.get("/:id", authMiddleware, getNoteById);
-
-// Route to update a specific note by its ID
-// router.put("/:id", authMiddleware, updateNote);
-router.put(
-  "/:id",
-  authMiddleware,
-  updateNoteValidationRules(),
-  validate,
-  sanitizeFields(["title", "content"]),
-  updateNote
-);
-
-// Route to delete a specific note by its ID
-router.delete("/:id", authMiddleware, deleteNote);
-
 router.post(
   "/upload",
   authMiddleware,
@@ -111,5 +94,18 @@ router.get("/trash", authMiddleware, getTrashedNotes);
 router.post("/trash/:id", authMiddleware, moveToTrash);
 
 router.post("/restore/:id", authMiddleware, restoreNote);
+
+router.get("/:id", authMiddleware, getNoteById);
+
+router.put(
+  "/:id",
+  authMiddleware,
+  updateNoteValidationRules(),
+  validate,
+  sanitizeFields(["title", "content"]),
+  updateNote
+);
+
+router.delete("/:id", authMiddleware, deleteNote);
 
 export default router;

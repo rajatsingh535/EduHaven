@@ -36,7 +36,7 @@ export const getAllArchivedNotes = async () => {
 };
 
 export const archiveNote = async (id) => {
-  const { data } = await axiosInstance.post(`/note/archieve/${id}`);
+  const { data } = await axiosInstance.post(`/note/archive/${id}`);
   return data.data;
 };
 
@@ -51,6 +51,6 @@ export const trashNote = async (id) => {
 };
 
 export const restoreTrashedNote = async (id) => {
-  const { data } = await axiosInstance.put(`/note/restore/${id}`);
+  const { data } = await axiosInstance.post(`/note/restore/${id}`);
   return data.data;
 };
