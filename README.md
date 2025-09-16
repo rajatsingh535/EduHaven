@@ -68,49 +68,52 @@
 ## 📂Folder Structure📂
 
 ```
-📂 repo-root/
-├─ 📂 .github/                 # GitHub workflows, issue & PR templates
-├─ 📂 client/                  # Frontend code (React/Vite)
-│  ├─ 📂 src/                  # Components, pages, styles
-│  ├─ 📂 public/               # Static assets
-│  │  ├─ EduhavenBadges/       # Badge images
-│  │  ├─ sounds/               # Audio files
-│  │  ├─ Logo.svg              # Project logo
-│  │  ├─ GoogleIcon.svg        # Google icon
-│  │  ├─ gssoc.png             # GSSoC banner
-│  │  ├─ focusDockDisplay*.jpg/png  # Focus Dock screenshots
-│  │  ├─ studyRoom.png
-│  │  ├─ studyStats.webp
-│  │  ├─ favicon.ico
-│  │  ├─ apple-touch-icon.png
-│  │  ├─ manifest.json
-│  │  ├─ sw.js
-│  │  ├─ robots.txt
-│  │  └─ sitemap.xml
-│  ├─ .env.example             # Example frontend env variables
-│  ├─ .env.extension           # Browser extension config (e.g., Chrome)
-│  ├─ vite.config.js           # Vite build config
-│  ├─ tailwind.config.js       # Tailwind CSS config
-│  └─ package.json             # Frontend dependencies and scripts
-├─ 📂 server/                  # Backend code (Node.js/Express)
-│  ├─ Controller/              # Request handlers
-│  ├─ Routes/                  # Express routes
-│  ├─ Model/                   # Database models/schemas
-│  ├─ Database/                # DB connection/setup
-│  ├─ Middlewares/             # Express middlewares
-│  ├─ Socket/                  # WebSocket functionality
-│  ├─ security/                # Security configs
-│  ├─ utils/                   # Helper functions
-│  ├─ .env.example             # Example backend env variables
-│  ├─ index.js                 # Backend entry point
-│  └─ API_DOCS.md              # API documentation
-├─ CONTRIBUTING.md             # Contribution guidelines
-├─ CODE_OF_CONDUCT.md          # Code of conduct
-├─ .prettierrc.json            # Code formatting rules
-└─ LEARN.md                    # Reference/learning notes
+📦   EduHaven/
+├─ 📂 .github/                  # 🔧 GitHub workflows, issue & PR templates
+│
+├─ 📂 client/                   # 🎨 Frontend (React + Vite)
+│  ├─ 📂 src/                   # 📂 Components, pages, styles
+│  ├─ 📂 public/                # 📂 Static assets
+│  │  ├─ 📂 EduhavenBadges/     # 🏅 Badge images
+│  │  ├─ 📂 sounds/             # 🎵 Audio files
+│  │  ├─ 📄 Logo.svg            # 🔖 Project logo
+│  │  ├─ 📄 GoogleIcon.svg      # 🔍 Google sign-in icon
+│  │  ├─ 📄 gssoc.png           # 📢 GSSoC banner
+│  │  ├─ 📄 focusDockDisplay*.jpg/png # 🖼️ Focus Dock screenshots
+│  │  ├─ 📄 studyRoom.png       # 🏫 Study room illustration
+│  │  ├─ 📄 studyStats.webp     # 📊 Study stats graphic
+│  │  ├─ 📄 favicon.ico         # 🌐 Favicon
+│  │  ├─ 📄 apple-touch-icon.png # 📱 iOS app icon
+│  │  ├─ 📄 manifest.json       # 📜 PWA manifest
+│  │  ├─ 📄 sw.js               # ⚡ Service worker
+│  │  ├─ 📄 robots.txt          # 🤖 SEO robots file
+│  │  └─ 📄 sitemap.xml         # 🗺️ Website sitemap
+│  │
+│  ├─ 📄 .env.example           # ⚙️ Example frontend env variables
+│  ├─ 📄 .env.extension         # 🧩 Browser extension config
+│  ├─ 📄 vite.config.js         # ⚡ Vite build config
+│  ├─ 📄 tailwind.config.js     # 🎨 Tailwind CSS config
+│  └─ 📄 package.json           # 📦 Frontend dependencies & scripts
+│
+├─ 📂 server/                   # 🖥️ Backend (Node.js + Express)
+│  ├─ 📂 Controller/            # 🎯 Request handlers
+│  ├─ 📂 Routes/                # 🛣️ API routes
+│  ├─ 📂 Model/                 # 🗄️ Database models/schemas
+│  ├─ 📂 Database/              # 🛢️ Database connection/setup
+│  ├─ 📂 Middlewares/           # 🛡️ Express middlewares
+│  ├─ 📂 Socket/                # 🔌 WebSocket functionality
+│  ├─ 📂 security/              # 🔒 Security configs
+│  ├─ 📂 utils/                 # 🧰 Helper functions
+│  ├─ 📄 .env.example           # ⚙️ Example backend env variables
+│  ├─ 📄 index.js               # 🚀 Backend entry point
+│  └─ 📄 API_DOCS.md            # 📖 API documentation
+│
+├─ 📄 CONTRIBUTING.md           # 🤝 Contribution guidelines
+├─ 📄 CODE_OF_CONDUCT.md        # 📜 Code of conduct
+├─ 📄 .prettierrc.json          # ✨ Code formatting rules
+└─ 📄 LEARN.md                  # 📘 Reference / learning notes
 
-
-
+```
 ## Installation and Setup
 - Make sure you've joined our [discord server](https://discord.gg/CbsNFUDC) so you can connect in case you face any issues.
 - **Prerequisites:** Node.js, MongoDB, Git
