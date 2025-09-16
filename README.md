@@ -19,29 +19,28 @@
 
 ### Features :
 
-- **_User Dashboard (Home Page)_** :
+- **_User Dashboard (Home Page)_**
 
-  Study and break timer, stats summary, notes management, goal setting with deadlines, integrated calendar, and study tools like AI chat, calculator, converter, and graph.
+  > Study and break timer, stats summary, notes management, goal setting with deadlines, integrated calendar, and study tools like AI chat, calculator, converter, and graph.
 
-- **_Real-Time Study Rooms_** :
+- **_Real-Time Study Rooms_**
 
-  Create or join study rooms with friends, use video/audio controls, manage permissions, and chat for discussions.
+  > Create or join study rooms with friends, use video/audio controls, manage permissions, and chat for discussions.
 
-- **_Realtime Stats_** :
+- **_Realtime Stats_**
 
-  Track study time, streaks, global and friend ranks, badges, goal completion, and friends' analytics.
+  > Track study time, streaks, global and friend ranks, badges, goal completion, and friends' analytics.
 
-- **_Realtime Chat_** :
+- **_Realtime Chat_**
 
-  Chat with peers, share notes and study materials, send private messages, and see online/offline presence.
+  > Chat with peers, share notes and study materials, send private messages, and see online/offline presence.
 
-- **_Friends and Social Features_** :
+- **_Friends and Social Features_**
 
-  Add friends, invite them to rooms, track their status, and share goals and progress.
+  > Add friends, invite them to rooms, track their status, and share goals and progress.
 
-- **_Gamification_** :
-
-  Earn badges and rewards, maintain streaks, climb leaderboards, and play games to refresh your mind.
+- **_Gamification_**
+  > Earn badges and rewards, maintain streaks, climb leaderboards, and play games to refresh your mind.
 
 ## Tech Stack
 
