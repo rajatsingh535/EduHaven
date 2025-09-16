@@ -2,26 +2,97 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Clock4, Flame, BarChart2 } from "lucide-react";
 import { useConsolidatedStats } from "@/queries/timerQueries";
+import { levels } from "@/components/stats/MonthlyLevel";
+import { fetchConsolidatedStats } from "@/api/timerApi";
+import { useTimerStore } from "@/stores/timerStore";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 
+
+// Variants for dropdown buttons
+const dropdownButtonVariants = {
+  initial: { backgroundColor: "transparent" },
+  hover: { backgroundColor: "var(--bg-ter)" },
+};
+
+const periodMapping = {
+  "Today": "daily",
+  "This week": "weekly", 
+  "This month": "monthly",
+  // "All time": "all-time"  ---> this option has been currently not been set up in the backend logic 
+};
+
+// This allows to display the current monthly level as in the stats page 
+const getMonthlyLevel = (monthlyHours) => {
+  const totalHours = parseFloat(monthlyHours) || 0;
+  const currentLevel = levels.find((lvl) => totalHours >= lvl.min && totalHours < lvl.max) || levels[levels.length - 1];
+  const nextLevel = levels[levels.indexOf(currentLevel) + 1];
+  const range = nextLevel ? `${currentLevel.min}-${nextLevel.min}h` : `${currentLevel.min}h+`;
+
+  return { name: currentLevel.name, range };
+};
+
 function StatsSummary() {
+
   const [selectedTime, setSelectedTime] = useState("Today");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Use the consolidated TanStack Query hook
-  const { data, isLoading, error, refetch } = useConsolidatedStats();
+    // Get current timer state from store
+  const { time: currentTimerTime, isRunning, startTime } = useTimerStore();
 
-  // Extract the user-specific stats from the consolidated data object
+  // Get the period for API call based on selected filter
+  const apiPeriod = periodMapping[selectedTime] || "daily";
+
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["consolidatedStats", apiPeriod],
+    queryFn: () => fetchConsolidatedStats(null, apiPeriod),
+    refetchInterval: 30000,
+    staleTime: 15000,
+  });
+
+
+  // Get the current session hours 
+
+  const getCurrentSessionHours = () => {
+    if (!isRunning || !startTime) return 0;
+    
+    const now = new Date();
+    const start = new Date(startTime);
+    const sessionSeconds = Math.floor((now - start) / 1000);
+    const totalCurrentSeconds = sessionSeconds + (currentTimerTime.hours * 3600 + currentTimerTime.minutes * 60 + currentTimerTime.seconds);
+    
+    return totalCurrentSeconds / 3600;
+  };
+
   const stats = data?.userStats;
 
-  // Prepare study data from the query response
+
+
+  const currentSessionHours = getCurrentSessionHours();
+
+   const getEnhancedValue = (baseValue, timeFilter) => {
+    const base = parseFloat(baseValue) || 0;
+    
+    if (timeFilter === "Today" && currentSessionHours > 0) {
+      const today = new Date().toISOString().split('T')[0];
+      const isToday = !startTime || new Date(startTime).toISOString().split('T')[0] === today;
+      
+      if (isToday) {
+        return base + currentSessionHours;
+      }
+    }
+    
+    return base;
+  };
+
+  // Here the study data directly uses the values from the API call
   const studyData = stats
     ? {
-        Today: `${stats.timePeriods?.today || "0.0"} h`,
-        "This week": `${stats.timePeriods?.thisWeek || "0.0"} h`,
-        "This month": `${stats.timePeriods?.thisMonth || "0.0"} h`,
-        "All time": `${stats.timePeriods?.allTime || "0.0"} h`,
+        Today: `${getEnhancedValue(stats.timePeriods?.today || "0.0", "Today").toFixed(1)} h`,
+        "This week": `${getEnhancedValue(stats.timePeriods?.thisWeek || "0.0", "This week").toFixed(1)} h`,
+        "This month": `${getEnhancedValue(stats.timePeriods?.thisMonth || "0.0", "This month").toFixed(1)} h`,
+        "All time": `${getEnhancedValue(stats.timePeriods?.allTime || "0.0", "All time").toFixed(1)} h`,
       }
     : {
         Today: "0.0 h",
@@ -29,6 +100,7 @@ function StatsSummary() {
         "This month": "0.0 h",
         "All time": "0.0 h",
       };
+
 
   // Prepare user stats from the query response
   const userStats = stats
@@ -220,8 +292,8 @@ function StatsSummary() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.4 }}
       >
-        {userStats.level.name} ({userStats.level.current || 1}-
-        {userStats.level.current + 1 || 2}h)
+        {getMonthlyLevel(getEnhancedValue(stats?.timePeriods?.thisMonth || "0", "Today").toString()).name} 
+        ({getMonthlyLevel(getEnhancedValue(stats?.timePeriods?.thisMonth || "0", "Today").toString()).range})
       </motion.p>
 
       <div className="relative w-full bg-ter h-5 rounded-2xl mt-2">
