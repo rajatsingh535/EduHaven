@@ -402,6 +402,7 @@ const Notes = () => {
             setSearchTerm={setSearchTerm}
             setStatus={setStatus}
             setSelectedNote={setSelectedNote}
+            status={status}
           />
 
           {(status == "active" || status == "archive") && (
