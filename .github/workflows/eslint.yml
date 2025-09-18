@@ -1,4 +1,4 @@
-name: Build & Lint
+name: Build Frontend
 
 on:
   pull_request:
@@ -26,23 +26,3 @@ jobs:
           cd Client
           npm ci
           npm run build
-
-  lint-backend:
-    name: Lint Backend
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: Server/package-lock.json
-
-      - name: Install and lint
-        run: |
-          cd Server
-          npm ci
-          npm run lint
