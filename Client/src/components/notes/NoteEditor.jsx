@@ -29,6 +29,7 @@ const NoteEditor = ({
   insertLink,
   insertImage,
   insertTable,
+  onClose,
 }) => {
   return (
     <motion.div
@@ -60,7 +61,7 @@ const NoteEditor = ({
           />
 
           <button
-            onClick={() => setSelectedNote(null)}
+            onClick={onClose}
             className="p-2 border-none bg-transparent cursor-pointer"
             style={{
               color: "var(--txt-dim)",
