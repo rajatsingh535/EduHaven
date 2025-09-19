@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from "react-router-dom";
 import FileHandler from "@tiptap/extension-file-handler";
 import Highlight from "@tiptap/extension-highlight";
 import { Image } from "@tiptap/extension-image";
@@ -50,6 +51,9 @@ const colors = [
 ];
 
 const Notes = () => {
+  const { noteId } = useParams();
+  const navigate = useNavigate();
+  const isFullScreen = !!noteId;
   const { data: notes = [], isLoading } = useNotes();
   const { data: archiveNotes = [], isLoading: isArchiveLoading } =
     useArchivedNotes();
@@ -67,6 +71,15 @@ const Notes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedNote, setSelectedNote] = useState(null);
   const [showColorPicker, setShowColorPicker] = useState(null);
+
+  useEffect(() => {
+    if (noteId && notes.length > 0) {
+      const foundNote = notes.find((n) => n._id === noteId);
+      if (foundNote) {
+        setSelectedNote(foundNote);
+      }
+    }
+  }, [noteId, notes]);
 
   const notesObj = {
     active: notes,
@@ -503,7 +516,9 @@ async function mySpecialImageHandler(node, pos, editor) {
       <div className="flex h-screen">
         {/* notes page (also works as sidebar} */}
         <div
-          className={`${selectedNote ? "w-80" : "w-full"} overflow-auto p-4`}
+          className={`${
+            isFullScreen ? "hidden" : selectedNote ? "w-80" : "w-full"
+          } overflow-auto p-4`}
         >
           <NoteHeader
             selectedNote={selectedNote}
@@ -546,16 +561,22 @@ async function mySpecialImageHandler(node, pos, editor) {
 
         {/* Note Editor */}
         {selectedNote && (
-          <NoteEditor
-            selectedNote={selectedNote}
-            setSelectedNote={setSelectedNote}
-            colors={colors}
-            editor={editor}
-            updateNote={updateNote}
-            insertLink={insertLink}
-            insertImage={insertImage}
-            insertTable={insertTable}
-          />
+          <div className="flex-1 flex flex-col">
+            <NoteEditor
+              selectedNote={selectedNote}
+              setSelectedNote={setSelectedNote}
+              colors={colors}
+              editor={editor}
+              updateNote={updateNote}
+              insertLink={insertLink}
+              insertImage={insertImage}
+              insertTable={insertTable}
+              onClose={() => {
+                if (noteId) navigate(-1);
+                else setSelectedNote(null);
+              }}
+            />
+          </div>
         )}
       </div>
     </div>
