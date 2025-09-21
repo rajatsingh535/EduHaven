@@ -76,11 +76,16 @@ const Friends = () => {
                       <User className="w-7 h-7" />
                     </div>
                   )}
-                  <h4 className="text-lg font-medium line-clamp-1 txt">
-                    {friend.FirstName
-                      ? `${friend.FirstName} ${friend.LastName || ""}`
-                      : "old-user"}
-                  </h4>
+                  <div>
+                    <h4 className="text-lg font-medium line-clamp-1 txt">
+                      {friend.FirstName
+                        ? `${friend.FirstName} ${friend.LastName || ""}`
+                        : "old-user"}
+                    </h4>
+                    {friend.Username && (
+                      <p className="text-sm txt">{friend.Username}</p>
+                    )}
+                  </div>
                 </Link>
               </div>
               <Button
