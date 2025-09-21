@@ -41,7 +41,7 @@ function Login() {
       }
 
       toast.success("Login successful! Welcome back.");
-      navigate("/");
+      navigate("/session");
     } catch (error) {
       console.error(`Login failed:`, error.response?.data || error.message);
       toast.error(error.response?.data?.error || "An error occurred");

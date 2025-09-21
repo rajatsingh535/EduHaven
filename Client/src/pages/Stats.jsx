@@ -110,7 +110,7 @@ const Stats = ({ isCurrentUser = false }) => {
 
         <div className="flex-1">
           <div className="mb-3 2xl:mb-6">
-            <StudyStats stats={userStats.studyStats} />
+          <StudyStats stats={userStats} />
           </div>
           <div className="flex flex-col xl:flex-col 2xl:flex-row">
             <div className="flex-1 mr-0 2xl:mr-6">
