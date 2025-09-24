@@ -28,6 +28,13 @@ const Stats = ({ isCurrentUser = false }) => {
           const decoded = jwtDecode(token);
           await fetchUserDetails(decoded.id);
 
+          // FIXED: Use fetchUserStats for consistent leaderboard/rank data
+          const res = await fetchUserStats(decoded.id);
+          
+          // Debug logging to track rank data
+          console.log("Current User Stats API Response:", res);
+          console.log("Current User Leaderboard Data:", res.stats?.leaderboard);
+
           setUserStats({
             name: `${currentUser?.FirstName ?? ""} ${currentUser?.LastName ?? ""}`.trim(),
             bio: currentUser?.Bio ?? "",
@@ -42,11 +49,17 @@ const Stats = ({ isCurrentUser = false }) => {
             monthlyLevel: currentUser?.MonthlyLevel ?? {},
             badges: currentUser?.Badges ?? [],
             goals: currentUser?.Goals ?? [],
-            leaderboard: currentUser?.Leaderboard ?? [],
+            // FIXED: Use consistent data source for leaderboard/rank
+            leaderboard: res.stats?.leaderboard ?? [],
             testData: currentUser?.TestData ?? {},
           });
         } else {
           const res = await fetchUserStats(userId);
+          
+          // Debug logging to track rank data
+          console.log("Other User Stats API Response:", res);
+          console.log("Other User Leaderboard Data:", res.stats?.leaderboard);
+
           setUserStats({
             name: `${res.userInfo?.firstName ?? ""} ${res.userInfo?.lastName ?? ""}`.trim(),
             bio: res.userInfo?.bio ?? "",

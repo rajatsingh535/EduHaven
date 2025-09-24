@@ -5,6 +5,7 @@ import { MessageCircle, ThumbsUp, UserPlus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { fetchUserStats } from "@/contexts/UserProfileContext";
 
 import {
   useAcceptRequest,
@@ -17,7 +18,6 @@ import ProfileHeader from "./ProfileHeader";
 import ProfileSkeleton from "./ProfileSkeleton";
 
 const ProfileCard = ({ isCurrentUser = false }) => {
-  // ... keep all your state & logic here
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
@@ -156,17 +156,36 @@ const ProfileCard = ({ isCurrentUser = false }) => {
     const fetchUserProfile = async () => {
       try {
         let response;
+        let statsResponse;
         let token = localStorage.getItem("token");
+        
         if (isCurrentUser) {
           const decoded = jwtDecode(token);
           response = await axiosInstance.get(`/user/details?id=${decoded.id}`);
+          // FIXED: Also fetch stats data for consistent rank/leaderboard data
+          statsResponse = await fetchUserStats(decoded.id);
         } else {
           response = await axiosInstance.get(`/user/details?id=${userId}`);
+          // FIXED: Also fetch stats data for consistent rank/leaderboard data
+          statsResponse = await fetchUserStats(userId);
         }
 
-        // console.log(response);
+        // Debug logging to track rank consistency
+        console.log("ProfileCard User Details:", response.data);
+        console.log("ProfileCard Stats Response:", statsResponse);
+        console.log("ProfileCard Leaderboard Data:", statsResponse?.stats?.leaderboard);
 
-        setUser(response.data);
+        // FIXED: Merge user details with consistent stats/rank data
+        const userData = {
+          ...response.data,
+          // Add consistent rank/leaderboard data from stats API
+          rank: statsResponse?.stats?.leaderboard?.rank || statsResponse?.stats?.rank || response.data.rank,
+          leaderboardData: statsResponse?.stats?.leaderboard || [],
+          // Preserve other stats data that might be needed
+          studyStats: statsResponse?.stats || response.data.studyStats,
+        };
+
+        setUser(userData);
         setKudosCount(response.data.kudosReceived || 0);
         setHasGivenKudos(response.data.hasGivenKudos || false);
         setFriendRequestStatus(response.data.relationshipStatus);

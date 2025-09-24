@@ -6,6 +6,7 @@ import {
   checkAllBadges,
   checkAndAwardRookieBadge,
 } from "../utils/badgeSystem.js";
+import mongoose from "mongoose";
 
 // Configure Cloudinary
 cloudinary.config({
@@ -14,6 +15,97 @@ cloudinary.config({
   api_secret:
     process.env.CLOUDINARY_API_SECRET || "BXpWyZHYKbAexc3conUG88t6TVM",
 });
+
+// HELPER FUNCTION: Calculate consistent rank for any user
+const calculateUserRank = async (userId) => {
+  try {
+    // Get all users with their scores (adjust scoring logic as needed)
+    const allUsersWithScores = await User.aggregate([
+      {
+        $addFields: {
+          totalScore: {
+            $add: [
+              { $multiply: [{ $ifNull: ["$StudyStats.totalHours", 0] }, 10] }, // 10 points per hour
+              { $multiply: [{ $ifNull: ["$StudyStats.totalSessions", 0] }, 5] }, // 5 points per session
+              { $multiply: [{ $ifNull: ["$streaks.current", 0] }, 3] }, // 3 points per streak day
+              { $multiply: [{ $ifNull: ["$kudosReceived", 0] }, 2] }, // 2 points per kudos
+            ]
+          }
+        }
+      },
+      { $sort: { totalScore: -1 } },
+      { $project: { _id: 1, totalScore: 1 } }
+    ]);
+
+    // Find user's rank
+    const userRank = allUsersWithScores.findIndex(user => 
+      user._id.toString() === userId.toString()
+    ) + 1;
+
+    // Get user's score
+    const userScore = allUsersWithScores.find(user => 
+      user._id.toString() === userId.toString()
+    )?.totalScore || 0;
+
+    return { rank: userRank, totalScore: userScore };
+  } catch (error) {
+    console.error("Error calculating rank:", error);
+    return { rank: 0, totalScore: 0 };
+  }
+};
+
+// NEW ENDPOINT: Get user stats with consistent rank
+const getUserStats = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    
+    if (!userId || userId === "undefined") {
+      return res.status(400).json({ error: "User ID is required" });
+    }
+
+    // Get user details
+    const user = await User.findById(userId).select("-Password").lean();
+    
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Calculate rank consistently
+    const rankData = await calculateUserRank(userId);
+    
+    console.log("User Stats API - Rank Data:", rankData);
+    
+    const response = {
+      userInfo: {
+        firstName: user.FirstName,
+        lastName: user.LastName,
+        bio: user.Bio || "",
+        profilePicture: user.ProfilePicture || "",
+      },
+      stats: {
+        totalSessions: user.StudyStats?.totalSessions || 0,
+        totalHours: user.StudyStats?.totalHours || 0,
+        streaks: user.streaks || { current: 0, max: 0, lastStudyDate: null },
+        monthlyLevel: user.MonthlyLevel || {},
+        badges: user.Badges || [],
+        goals: user.Goals || [],
+        testData: user.TestData || {},
+        totalScore: rankData.totalScore,
+        rank: rankData.rank,
+        leaderboard: {
+          rank: rankData.rank,
+          totalScore: rankData.totalScore,
+          position: rankData.rank
+        }
+      }
+    };
+
+    res.json(response);
+  } catch (error) {
+    console.error("Error fetching user stats:", error);
+    res.status(500).json({ error: "Failed to fetch user stats", details: error.message });
+  }
+};
 
 const updateProfile = async (req, res) => {
   try {
@@ -110,6 +202,7 @@ const updateProfile = async (req, res) => {
   }
 };
 
+// UPDATED: getUserDetails with consistent rank calculation
 const getUserDetails = async (req, res) => {
   try {
     const userId = req.query.id;
@@ -125,41 +218,67 @@ const getUserDetails = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    // Calculate rank consistently (same logic as getUserStats)
+    const rankData = await calculateUserRank(userId);
+    
+    console.log("User Details API - Rank Data:", rankData);
+
     const token = req.headers.authorization?.split(" ")[1];
-    if (!token)
-      return res
-        .status(200)
-        .json({ ...user, relationshipStatus: "Add friends" });
-
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (err) {
-      return res
-        .status(200)
-        .json({ ...user, relationshipStatus: "Add friends" });
-    }
-
-    const currUser = await User.findById(decoded.id).select(
-      "friends friendRequests sentRequests"
-    );
-
-    if (!currUser) {
-      return res.status(200).json({ ...user, relationshipStatus: "unknown" });
-    }
-
-    // Determine relationship from here
     let relationshipStatus = "Add Friend";
 
-    if (currUser.friends.includes(userId)) {
-      relationshipStatus = "Friends";
-    } else if (currUser.sentRequests.includes(userId)) {
-      relationshipStatus = "Cancel Request";
-    } else if (currUser.friendRequests.includes(userId)) {
-      relationshipStatus = "Accept Request";
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const currUser = await User.findById(decoded.id).select(
+          "friends friendRequests sentRequests kudosGiven"
+        );
+
+        if (currUser) {
+          // Determine relationship status
+          if (currUser.friends.includes(userId)) {
+            relationshipStatus = "Friends";
+          } else if (currUser.sentRequests.includes(userId)) {
+            relationshipStatus = "Cancel Request";
+          } else if (currUser.friendRequests.includes(userId)) {
+            relationshipStatus = "Accept Request";
+          }
+
+          // Check if current user has given kudos to this user
+          const hasGivenKudos = currUser.kudosGiven.includes(userId);
+          
+          return res.status(200).json({
+            ...user,
+            relationshipStatus,
+            hasGivenKudos,
+            // ADD CONSISTENT RANK DATA
+            rank: rankData.rank,
+            totalScore: rankData.totalScore,
+            leaderboardData: {
+              rank: rankData.rank,
+              totalScore: rankData.totalScore,
+              position: rankData.rank
+            }
+          });
+        }
+      } catch (err) {
+        console.error("JWT verification error:", err);
+        // Continue without auth data
+      }
     }
 
-    return res.status(200).json({ ...user, relationshipStatus });
+    return res.status(200).json({
+      ...user,
+      relationshipStatus,
+      hasGivenKudos: false,
+      // ADD CONSISTENT RANK DATA
+      rank: rankData.rank,
+      totalScore: rankData.totalScore,
+      leaderboardData: {
+        rank: rankData.rank,
+        totalScore: rankData.totalScore,
+        position: rankData.rank
+      }
+    });
   } catch (error) {
     console.error("Error fetching user details:", error);
     res.status(500).json({ error: "Failed to fetch user details" });
@@ -218,13 +337,15 @@ const getUserBadges = async (req, res) => {
     const userId = req.user._id;
     console.log("Getting badges for user:", userId);
 
-    const user = await User.findById(userId).select("badges");
+    const user = await User.findById(userId).select("badges Badges legacyBadges");
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    console.log("Current user badges:", user.badges);
+    // Handle both old and new badge field names
+    const userBadges = user.Badges || user.badges || user.legacyBadges || [];
+    console.log("Current user badges:", userBadges);
 
     // Check for any newly earned badges
     try {
@@ -234,11 +355,12 @@ const getUserBadges = async (req, res) => {
 
       if (newBadges.length > 0) {
         // Re-fetch user to get updated badges
-        const updatedUser = await User.findById(userId).select("badges");
-        console.log("Updated user badges after awarding:", updatedUser.badges);
+        const updatedUser = await User.findById(userId).select("badges Badges legacyBadges");
+        const updatedBadges = updatedUser.Badges || updatedUser.badges || updatedUser.legacyBadges || [];
+        console.log("Updated user badges after awarding:", updatedBadges);
 
         return res.status(200).json({
-          badges: updatedUser.badges || [],
+          badges: updatedBadges,
           newBadges: newBadges,
           availableBadges: Object.values(BADGES),
         });
@@ -249,7 +371,7 @@ const getUserBadges = async (req, res) => {
     }
 
     return res.status(200).json({
-      badges: user.badges || [],
+      badges: userBadges,
       newBadges: [],
       availableBadges: Object.values(BADGES),
     });
@@ -305,6 +427,7 @@ const giveKudos = async (req, res) => {
 export {
   getUserBadges,
   getUserDetails,
+  getUserStats, // NEW EXPORT
   giveKudos,
   updateProfile,
   uploadProfilePicture,
